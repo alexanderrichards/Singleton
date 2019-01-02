@@ -1,2 +1,2 @@
 """Singleton package."""
-from ._singleton import singleton
+from ._singleton import singleton, InstantiationError
