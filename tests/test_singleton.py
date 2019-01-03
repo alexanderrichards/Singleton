@@ -12,46 +12,55 @@ class TestSingleton(unittest.TestCase):
             def __init__(self, a, b, c=90):
                 self.a, self.b, self.c = a, b, c
         self.test_class = TestClass
-
-    def test_get_instance_instantiation(self):
         self.assertIsInstance(self.test_class, SingletonMeta)
         self.assertFalse(hasattr(self.test_class, '__instance__'))
-        with self.assertRaises(InstantiationError):
-            self.test_class(1, 2)
-        instance = self.test_class.get_instance(12, b=98, c=100)
+
+    def tearDown(self):
+        """Check singleton internals were setup correctly."""
         self.assertTrue(hasattr(self.test_class, '__instance__'))
         self.assertIsNotNone(self.test_class.__instance__)
         self.assertIsInstance(self.test_class.__instance__, self.test_class)
+
+    def test_get_instance_instantiation(self):
+        """Test instantiation with get_instance."""
+        with self.assertRaises(InstantiationError):
+            self.test_class(1, 2)
+        with self.assertRaises(TypeError):
+            instance = self.test_class.get_instance()
+        with self.assertRaises(TypeError):
+            instance = self.test_class.get_instance(12)
+        instance = self.test_class.get_instance(12, b=98, c=100)
         self.assertEqual(instance.a, 12)
         self.assertEqual(instance.b, 98)
         self.assertEqual(instance.c, 100)
 
     def test_setup_instantiation(self):
-        self.assertFalse(hasattr(self.test_class, '__instance__'))
+        """Test instantiation with setup."""
         with self.assertRaises(InstantiationError):
             self.test_class(1, 2)
+        with self.assertRaises(TypeError):
+            instance = self.test_class.setup()
+        with self.assertRaises(TypeError):
+            instance = self.test_class.setup(12)
         instance = self.test_class.setup(12, b=98, c=100)
-        self.assertTrue(hasattr(self.test_class, '__instance__'))
-        self.assertIsNotNone(self.test_class.__instance__)
-        self.assertIsInstance(self.test_class.__instance__, self.test_class)
         self.assertEqual(instance.a, 12)
         self.assertEqual(instance.b, 98)
         self.assertEqual(instance.c, 100)
 
     def test_setup_second_call(self):
-        self.assertFalse(hasattr(self.test_class, '__instance__'))
+        """Test a second call to setup."""
         instance = self.test_class.setup(12, b=98, c=100)
         with self.assertRaises(InstantiationError):
             self.test_class.setup(1, b=2)
 
     def test_get_instance_then_setup(self):
-        self.assertFalse(hasattr(self.test_class, '__instance__'))
+        """Test a call to setup after a call to get_instance."""
         instance = self.test_class.get_instance(12, b=98, c=100)
         with self.assertRaises(InstantiationError):
             self.test_class.setup(1, b=2)
 
     def test_single_object(self):
-        self.assertFalse(hasattr(self.test_class, '__instance__'))
+        """Test that we do indeed only create one object instance."""
         instance = self.test_class.setup(12, b=98)
         self.assertEqual(instance.a, 12)
         self.assertEqual(instance.b, 98)
