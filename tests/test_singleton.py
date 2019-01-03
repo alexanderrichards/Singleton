@@ -4,6 +4,7 @@ from singleton._singleton import singleton, InstantiationError, SingletonMeta
 
 
 class TestSingleton(unittest.TestCase):
+    """Integration tests."""
 
     def setUp(self):
         """Setup new singleton class."""
@@ -49,13 +50,13 @@ class TestSingleton(unittest.TestCase):
 
     def test_setup_second_call(self):
         """Test a second call to setup."""
-        instance = self.test_class.setup(12, b=98, c=100)
+        self.test_class.setup(12, b=98, c=100)
         with self.assertRaises(InstantiationError):
             self.test_class.setup(1, b=2)
 
     def test_get_instance_then_setup(self):
         """Test a call to setup after a call to get_instance."""
-        instance = self.test_class.get_instance(12, b=98, c=100)
+        self.test_class.get_instance(12, b=98, c=100)
         with self.assertRaises(InstantiationError):
             self.test_class.setup(1, b=2)
 
