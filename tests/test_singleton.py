@@ -62,6 +62,11 @@ class TestSingletonDecorator(unittest.TestCase):
             namespace = vars(TestClass).copy()
             namespace.pop('__dict__', None)
             namespace.pop('__weakref__', None)
+            namespace.pop('_abc_cache', None)
+            namespace.pop('_abc_negative_cache', None)
+            namespace.pop('__abstractmethods__', None)
+            namespace.pop('_abc_negative_cache_version', None)
+            namespace.pop('_abc_registry', None)
             p.assert_called_once_with(TestClass.__name__, TestClass.__bases__, namespace)
 
 

@@ -1,4 +1,5 @@
 """Singleton Utility Module."""
+from abc import ABCMeta
 
 
 class InstantiationError(RuntimeError):
@@ -9,7 +10,7 @@ class InstantiationError(RuntimeError):
         super(InstantiationError, self).__init__(*args, **kwargs)
 
 
-class SingletonMeta(type):
+class SingletonMeta(ABCMeta):
     """
     Singleton MetaClass.
 
