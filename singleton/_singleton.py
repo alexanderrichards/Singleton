@@ -1,6 +1,8 @@
 """Singleton Utility Module."""
 from abc import ABCMeta
 
+__all__ = ("SingletonMeta", "singleton", "InstantiationError")
+
 
 class InstantiationError(RuntimeError):
     """Instantiation exception."""
@@ -18,7 +20,7 @@ class SingletonMeta(ABCMeta):
     or indirectly through the singleton class decorator see help(singleton).
 
     Examples:
-        >>> class test(object):
+        >>> class Test(object):
         >>>     __metaclass__ = SingletonMeta
     """
 
@@ -56,7 +58,7 @@ def singleton(cls):
 
     Examples:
         >>> @singleton
-        >>> class test(object):
+        >>> class Test(object):
         >>>     pass
     """
     # It's hard to dynamically change meta so rebind new class
