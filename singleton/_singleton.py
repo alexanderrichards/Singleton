@@ -7,10 +7,6 @@ __all__ = ("SingletonMeta", "singleton", "InstantiationError")
 class InstantiationError(RuntimeError):
     """Instantiation exception."""
 
-    def __init__(self, *args):
-        """Initialisation."""
-        super(InstantiationError, self).__init__(*args)
-
 
 class SingletonMeta(ABCMeta):
     """
