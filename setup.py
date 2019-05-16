@@ -5,7 +5,14 @@ setup(
     name="singleton",
     version="0.1",
     packages=find_packages(),
-
+    extras_require={
+        'dev': ['pylint',
+                'pycodestyle',
+                'pydocstyle',
+                'pytest',
+                'coverage',
+                'pytest-cov'],
+    },
     # metadata for upload to PyPI
     author="Alexander Richards",
     author_email="a.richards@imperial.ac.uk",
