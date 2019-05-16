@@ -1,0 +1,39 @@
+language: python
+matrix:
+  include:
+    - python: 2.7
+      stage: style
+      name: "py2_pycodestyle"
+      script: pycodestyle --max-line-length=100 singleton
+    - python: 2.7
+      stage: style
+      name: "py2_pydocstyle"
+      script: pydocstyle singleton
+    - python: 2.7
+      stage: style
+      name: "py2_pylint"
+      script: pylint singleton
+    - python: 3.6
+      stage: style
+      name: "py3_pycodestyle"
+      script: pycodestyle --max-line-length=100 singleton
+    - python: 3.6
+      stage: style
+      name: "py3_pydocstyle"
+      script: pydocstyle singleton
+    - python: 3.6
+      stage: style
+      name: "py3_pylint"
+      script: pylint singleton
+
+    - python: 2.7
+      stage: test
+      script: pytest -vv --cov=singleton --cov-report=term-missing tests
+    - python: 3.6
+      stage: test
+      script: pytest -vv --cov=singleton --cov-report=term-missing tests
+git:
+  depth: 3
+install:
+  - pip install --upgrade --upgrade-strategy eager pip setuptools wheel
+  - pip install --upgrade --upgrade-strategy eager -e .[dev]
